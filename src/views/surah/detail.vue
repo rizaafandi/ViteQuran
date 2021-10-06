@@ -40,12 +40,12 @@
                             <!-- <icon-button color="green">
                                 <iconify icon="eva:play-circle-outline" class="w-6 h-6"></iconify>
                             </icon-button> -->
-                            <Player playsinline ref="player" controls class="w-full">
-                                <Audio>
-                                    <source :data-src="item.audio.primary" type="audio/mpeg">
-                                </Audio>
-                            </Player>
                         </div>
+                        <Player playsinline ref="player" controls class="w-full">
+                            <Audio>
+                                <source :data-src="item.audio.primary" type="audio/mpeg">
+                            </Audio>
+                        </Player>
                     </div>
                 </div>
             </template>

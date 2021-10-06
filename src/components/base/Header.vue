@@ -3,11 +3,12 @@
         <h4 class="flex-1 uppercase">
             Al-Qur'an Online
         </h4>
-        <div class="flex flex-row flex-none">
+        <div class="flex-1 flex flex-row">
             <div class="form-control">
                 <input type="search" placeholder="Search ( / )" class="input input-ghost input-bordered rounded-full" ref="search" @keydown.space.prevent @input.prevent="store.setSearch($event.target.value)">
             </div>
         </div>
+        <div class="flex-none"></div>
     </header>
 </template>
 <script setup>

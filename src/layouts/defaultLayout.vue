@@ -1,6 +1,6 @@
 <template>
     <div class="container bg-base-200 h-screen flex flex-row">
-        <Sidebar/>
+        <!-- <Sidebar/> -->
         <div class="w-full flex flex-col h-full">
             <Header/>
             <div class="bg-gray-200 h-full overflow-x-hidden" id="content">
