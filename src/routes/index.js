@@ -12,15 +12,6 @@ const router = createRouter({
             component: root,
             meta: {
                 layout: defaults
-            },
-        },
-        {
-            path: '/detail-surah/:id',
-            name: 'detail-surah',
-            component: () =>  import('../views/surah/detail.vue'),
-            props: true,
-            meta: {
-                layout: defaults
             }
         }
     ]

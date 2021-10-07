@@ -1,6 +1,6 @@
 <template>
-    <div class="grig grid-cols-2 gap-5 flex flex-row relative">
-        <div class="lg:w-9/12 w-full">
+    <div class="grig grid-cols-2 gap-5 flex flex-row relative" style="height: 80vh" v-if="store.detailSurah">
+        <div class="lg:w-9/12 w-full overflow-y-scroll" id="detail">
             <template v-for="(item, index) in store.detailSurah.verses" :key="index">
                 <div class="card bg-base-200 mb-4">
                     <div class="card-body">
@@ -50,55 +50,61 @@
                 </div>
             </template>
         </div>
-        <div class="card bg-base-200 w-3/12 hidden lg:block">
-            <div class="card-body w-full">
-                <span class="text-3xl font-bold">
+        <div class="card rounded-none bg-base-200 w-3/12 hidden lg:block  overflow-y-scroll">
+            <div class="card-body">
+                <span class="text-2xl font-bold">
                     {{ store.detailSurah.name.transliteration.id }}
                 </span>
                 <hr/>
                 <span> {{ store.detailSurah.name.translation.en }} / {{ store.detailSurah.name.translation.id }} </span>
-                <div class="card bg-green-100 mt-3 w-full">
-                    <div class="card-body">
-                        {{ store.detailSurah.tafsir.id }}
-                    </div>
+                <div class="mt-3 w-full text-justify">
+                    {{ store.detailSurah.tafsir.id }}
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="card bg-base-200" style="height: 80vh" v-else>
+        <div class="card-body flex justify-center items-center">
+            <iconify icon="eva:book-open-outline" :size="15"></iconify>
+            <span class="text-5xl">Choose Surah to Recite</span>
         </div>
     </div>
 </template>
 <script setup>
     import _ from 'lodash'
-    import { onBeforeRouteLeave } from 'vue-router'
-    import { useStore } from '../../stores'
+    import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
+    import { useStore } from '../stores'
     import { Player, Audio, DefaultUi } from '@vime/vue-next'
     import '@vime/core/themes/default.css'
 
     const player = ref(null)
     const store = useStore()
-    const props = defineProps({
-        id: {
-            type: String,
-            required: true
-        }
-    })
-
-    const {id} = toRefs(props)
-
-    onBeforeMount(async () => {
-        await fetch('https://api.quran.sutanlab.id/surah/'+atob(id.value)).then(r => r.json()).then(async res => {
-            let { verses } = res.data
-            let newVerses = []
-            verses.map(v => {
-                return newVerses.push({...v, favorite: false})
-            })
-            await store.setDetailSurah({..._.omit(res.data, 'verses'), verses: newVerses})
-        })
-    })
-    onBeforeRouteLeave((from, to, next) => {
-        store.detailSurah = []
-        next()
-    })
+    
     const setFavorite = (index) => {
         store.detailSurah.verses[index].favorite = !store.detailSurah.verses[index].favorite
     }
 </script>
+<style lang="scss" scoped>
+    ::-webkit-scrollbar-button {
+        display: none
+    }
+    ::-webkit-scrollbar {
+        background-color: rgba(229, 231, 235, 1);
+        width: 16px
+    }
+    ::-webkit-scrollbar-track {
+        background-color: rgba(229, 231, 235, 1)
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #babac0;
+        border-radius: 16px;
+        border: 5px solid rgba(229, 231, 235, 1);
+        &::hover{
+            background-color: #a0a0a5;
+            border: 4px solid rgba(229, 231, 235, 1);
+        }
+    }
+    ::-webkit-scrollbar-button {
+        display: none
+    }
+</style>

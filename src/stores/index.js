@@ -23,7 +23,7 @@ export const useStore = defineStore('main', {
     },
     getters:{
         filteredSurah(state){
-            return state.dataSurah.length < 1 ? [] : (!state.search ? state.dataSurah : state.dataSurah.filter(s => s.name.transliteration.id.toLowerCase().includes(state.search)))
+            return state.dataSurah.length < 1 ? [] : (!state.search ? state.dataSurah : state.dataSurah.filter(s => s.name.transliteration.id.toLowerCase().includes(state.search.toLowerCase())))
         }
     }
 })
