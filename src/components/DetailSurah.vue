@@ -1,5 +1,5 @@
 <template>
-    <div class="grig grid-cols-2 gap-5 flex flex-row relative" :class="!isMobile ? 'h-80' : ''" v-if="store.detailSurah">
+    <div class="grig grid-cols-2 gap-5 flex flex-row relative" :class="!isMobile ? 'h-80' : 'h-100'" v-if="store.detailSurah">
         <div class="lg:w-9/12 w-full overflow-y-scroll" id="detail">
             <template v-for="(item, index) in store.detailSurah.verses" :key="index">
                 <div class="card bg-base-200 mb-4">
@@ -93,6 +93,9 @@
 <style lang="scss" scoped>
     .h-80 {
         height: 80vh;
+    }
+    .h-100 {
+        height: 100vh;
     }
     ::-webkit-scrollbar-button {
         display: none
