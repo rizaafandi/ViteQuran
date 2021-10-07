@@ -1,6 +1,6 @@
 <template>
     <div class="gap-5 flex flex-row">
-        <div class="w-4/12 overflow-y-scroll " style="height: 80vh" id="surah">
+        <div class="lg:w-4/12 w-full overflow-y-scroll " style="height: 80vh" id="surah">
             <transition-group tag="div" name="animate" class="grid grid-cols-1 gap-5" >
                 <template v-for="(item, index) in store.filteredSurah" :key="index">
                     <SurahCard 
@@ -16,19 +16,30 @@
                 </template>
             </transition-group>
         </div>
-        <div class="w-8/12">
+        <div class="w-8/12 lg:block hidden">
             <DetailSurah/>
         </div>
     </div>
+    <vue-final-modal v-model="modal">
+        <icon-button @click.prevent="modal = false" color="red" class="text-red-600 bg-red-100 fixed right-3 top-3 z-50">
+            <iconify icon="eva:close-outline" class="w-10 h-10"></iconify>
+        </icon-button>
+        <div class="w-full bg-base-200">
+            <DetailSurah/>
+        </div>
+    </vue-final-modal>
 </template>
 
 <script setup>
+    import { $vfm, VueFinalModal, ModalsContainer } from 'vue-final-modal'
     import _ from 'lodash'
     import { onBeforeRouteLeave } from 'vue-router'
     import router from '../routes'
     import { useStore } from '../stores'
     import swal from 'sweetalert2'
     const store = useStore()
+    const modal = ref(false)
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 
     onBeforeMount(async () => {
         if(!store.dataSurah){
@@ -69,6 +80,7 @@
                 return newVerses.push({...v, favorite: false})
             })
             await store.setDetailSurah({..._.omit(res.data, 'verses'), verses: newVerses})
+            isMobile ? modal.value = true : false
         }).catch(() => {
             swal.fire({
                 icon: 'error',
