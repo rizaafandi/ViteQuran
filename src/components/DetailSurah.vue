@@ -1,5 +1,5 @@
 <template>
-    <div class="grig grid-cols-2 gap-5 flex flex-row relative" style="height: 80vh" v-if="store.detailSurah">
+    <div class="grig grid-cols-2 gap-5 flex flex-row relative" :class="!isMobile ? 'h-80' : ''" v-if="store.detailSurah">
         <div class="lg:w-9/12 w-full overflow-y-scroll" id="detail">
             <template v-for="(item, index) in store.detailSurah.verses" :key="index">
                 <div class="card bg-base-200 mb-4">
@@ -76,15 +76,24 @@
     import { useStore } from '../stores'
     import { Player, Audio, DefaultUi } from '@vime/vue-next'
     import '@vime/core/themes/default.css'
+    import { toRefs } from '@vue/reactivity'
 
     const player = ref(null)
     const store = useStore()
+    const props = defineProps({
+        isMobile: Boolean
+    })
+    const {isMobile} = toRefs(props)
     
+
     const setFavorite = (index) => {
         store.detailSurah.verses[index].favorite = !store.detailSurah.verses[index].favorite
     }
 </script>
 <style lang="scss" scoped>
+    .h-80 {
+        height: 80vh;
+    }
     ::-webkit-scrollbar-button {
         display: none
     }

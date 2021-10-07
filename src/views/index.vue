@@ -17,7 +17,7 @@
             </transition-group>
         </div>
         <div class="w-8/12 lg:block hidden">
-            <DetailSurah/>
+            <DetailSurah :is-mobile="isMobile"/>
         </div>
     </div>
     <vue-final-modal v-model="modal">
@@ -25,7 +25,7 @@
             <iconify icon="eva:close-outline" class="w-10 h-10"></iconify>
         </icon-button>
         <div class="w-full bg-base-200">
-            <DetailSurah/>
+            <DetailSurah :is-mobile="isMobile"/>
         </div>
     </vue-final-modal>
 </template>
